@@ -1,21 +1,18 @@
 <?
 
 class Pokemon{
-
+    public static $alive;
     public $name; // name
     public $energyType;
     public $hitPoints;
     public $weakness;
     public $attacks;
     public $resistance;
-
-    public function __construct($name, $energyType, $hitPoints, $attacks, $weakness,  $resistance){
+    
+    public function __construct($name, $hitPoints){
         $this->name = $name;
-        $this->energyType = $energyType;
         $this->hitPoints = $hitPoints;
-        $this->weakness = $weakness;
-        $this->resistance = $resistance;
-        $this->attacks = $attacks;
+        self::$alive++;
      }
     
     public function __toString(){
@@ -29,28 +26,54 @@ class Pokemon{
 
 
     public function attack($attack, $defender){
-        var_dump($attack);
-        $defender->hitPoints -= 10;
+     
+        if($this->energyType == $defender->weakness){
+            echo("Super effective </br>");
+            $defender->hitPoints -= $attack['damage'] * 1.5;
+        
+        }
+        else if($this->energyType == $defender->resistance){
+            echo("Not effective </br>");
+            $defender->hitPoints -= $attack['damage'] * 0.5;
+
+        }
+        else{
+            echo("Effective (not multiplied) </br>");
+            $defender->hitPoints -= $attack['damage'];
+        }
     
     }
 
 }
-class Attack extends Pokemon{
 
-}
-
-class Weakness extends Pokemon{
-
-    
-}
 
 
 class Pickachu extends Pokemon{
-
+    public function __construct($name, $hitPoints, $attacks){
+        parent::__construct($name,$hitPoints);
+        $this->energyType = "Electric";
+        $this->weakness = "Fire";
+        $this->resistance = "Fighting";
+        $this->attacks = $attacks;
+    }
     
+    public function __toString(){
+        return json_encode($this);
+    }
+
 }
 
 class Charmander extends Pokemon{
-
+    public function __construct($name, $hitPoints, $attacks){
+        parent::__construct($name,$hitPoints);
+        $this->energyType = "Fire";
+        $this->weakness = "Water";
+        $this->resistance = "Grass";
+        $this->attacks = $attacks;
+    }
+    
+    public function __toString(){
+        return json_encode($this);
+    }
 
 }
