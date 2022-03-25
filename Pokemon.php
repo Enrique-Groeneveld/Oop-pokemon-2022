@@ -12,9 +12,13 @@ class Pokemon{
     public function __construct($name, $hitPoints){
         $this->name = $name;
         $this->hitPoints = $hitPoints;
-        self::$alive++;
-     }
+        self::$alive = self::$alive += 1;
+    }
     
+    public function getPopulation(){
+        return self::$alive;
+    }
+
     public function __toString(){
         return json_encode($this);
     }
@@ -40,6 +44,10 @@ class Pokemon{
         else{
             echo("Effective (not multiplied) </br>");
             $defender->hitPoints -= $attack['damage'];
+        }
+        if ($defender->hitPoints <= 0){
+            echo($defender->name." has fainted");
+            self::$alive = self::$alive -= 1;
         }
     
     }

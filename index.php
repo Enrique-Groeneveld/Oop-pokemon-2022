@@ -22,8 +22,10 @@ echo("Charmander valt Pikachu aan met een Flare attack ");
 echo("</br>");
 
  $charmander->attack($charmander->attacks[1],$pickachu);
- echo("Pikachu heeft nu " . $pickachu->hitPoints . "hp");
+ echo("Pikachu heeft nu " . $pickachu->hitPoints . "hp </br>");
 
+
+ echo "Levende pokemons " . Pokemon::getPopulation();
 // echo $charmeleon->hitPoints;
 // // $pickachu->hitPoints-50;
 // // echo $pickachu->hitPoints;
