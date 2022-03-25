@@ -1,7 +1,7 @@
 <?
 
 class Pokemon{
-    public static $alive;
+    private static $alive;
     public $name; // name
     public $energyType;
     public $hitPoints;
@@ -9,9 +9,10 @@ class Pokemon{
     public $attacks;
     public $resistance;
     
-    public function __construct($name, $hitPoints){
+    public function __construct($name, $hitPoints, $health){
         $this->name = $name;
         $this->hitPoints = $hitPoints;
+        $this->health = $health;
         self::$alive = self::$alive += 1;
     }
     
@@ -32,17 +33,14 @@ class Pokemon{
     public function attack($attack, $defender){
      
         if($this->energyType == $defender->weakness){
-            echo("Super effective </br>");
             $defender->hitPoints -= $attack['damage'] * 1.5;
         
         }
         else if($this->energyType == $defender->resistance){
-            echo("Not effective </br>");
             $defender->hitPoints -= $attack['damage'] * 0.5;
 
         }
         else{
-            echo("Effective (not multiplied) </br>");
             $defender->hitPoints -= $attack['damage'];
         }
         if ($defender->hitPoints <= 0){
@@ -57,8 +55,8 @@ class Pokemon{
 
 
 class Pickachu extends Pokemon{
-    public function __construct($name, $hitPoints, $attacks){
-        parent::__construct($name,$hitPoints);
+    public function __construct($name, $hitPoints, $health, $attacks){
+        parent::__construct($name,$hitPoints,$health);
         $this->energyType = "Electric";
         $this->weakness = "Fire";
         $this->resistance = "Fighting";
@@ -72,8 +70,8 @@ class Pickachu extends Pokemon{
 }
 
 class Charmander extends Pokemon{
-    public function __construct($name, $hitPoints, $attacks){
-        parent::__construct($name,$hitPoints);
+    public function __construct($name, $hitPoints, $health, $attacks){
+        parent::__construct($name,$hitPoints,$health);
         $this->energyType = "Fire";
         $this->weakness = "Water";
         $this->resistance = "Grass";
